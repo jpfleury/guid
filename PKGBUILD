@@ -1,7 +1,7 @@
 pkgname=guid
 pkgver=r71.968836b
 pkgrel=1
-pkgdesc="Create cross-platform GUI dialogs in a breeze for Linux, macOS and Windows"
+pkgdesc="Create advanced cross-platform GUI dialogs from the command line"
 arch=('i686' 'x86_64')
 url="https://github.com/jpfleury/guid"
 license=('GPL')
@@ -10,7 +10,7 @@ makedepends=('git' 'gcc')
 
 pkgver()
 {
-    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    git describe --tags --always --dirty | sed 's/-/./g'
 }
 
 build()

@@ -5,6 +5,9 @@ QT += dbus gui widgets
 unix:!macx:QT += x11extras
 TARGET = guid
 
+APP_VERSION = $$system(git describe --tags --always --dirty 2>/dev/null)
+DEFINES += APP_VERSION=\\\"$$APP_VERSION\\\"
+
 unix:!macx:LIBS += -lX11
 unix:!macx:DEFINES += WS_X11
 
