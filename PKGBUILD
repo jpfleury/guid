@@ -8,19 +8,16 @@ license=('GPL')
 depends=('qt5-base')
 makedepends=('git' 'gcc')
 
-pkgver()
-{
-    git describe --tags --always --dirty | sed 's/-/./g'
+pkgver() {
+	git describe --tags --always --dirty | sed 's/-/./g'
 }
 
-build()
-{
-    qmake-qt5 ..
-    make
+build() {
+	qmake-qt5 ..
+	make
 }
 
-package()
-{
-    install -Dm755 guid -t "$pkgdir/usr/bin"
-    ln -s /usr/bin/guid "$pkgdir/usr/bin/guid-askpass"
+package() {
+	install -Dm755 guid -t "$pkgdir/usr/bin"
+	ln -s /usr/bin/guid "$pkgdir/usr/bin/guid-askpass"
 }

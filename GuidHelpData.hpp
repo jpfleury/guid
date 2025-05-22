@@ -1255,3 +1255,5 @@ Help("--selectable-labels",
 
 return helpDict;
 }
+
+// vim:set noet sw=4 ts=4
