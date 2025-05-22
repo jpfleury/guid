@@ -547,4 +547,3 @@ class BitBuffer final : public std::vector<bool> {
 };
 
 }
-
