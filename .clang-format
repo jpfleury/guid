@@ -1,0 +1,27 @@
+BasedOnStyle: WebKit
+
+UseTab: ForIndentation
+IndentWidth: 4
+TabWidth: 4
+
+BreakBeforeBraces: Attach
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: InlineOnly
+
+AlignOperands: false
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignTrailingComments: false
+AlignAfterOpenBracket: DontAlign
+
+SpaceBeforeParens: ControlStatements
+SpacesInParentheses: false
+SpaceAfterCStyleCast: true
+
+PointerAlignment: Left
+DerivePointerAlignment: false
+
+SortIncludes: true
+IncludeBlocks: Preserve
+ReflowComments: false
