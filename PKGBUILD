@@ -1,3 +1,6 @@
+# shellcheck shell=bash
+# shellcheck disable=SC2034
+
 pkgname=guid
 pkgver=r71.968836b
 pkgrel=1
@@ -18,6 +21,6 @@ build() {
 }
 
 package() {
+	# shellcheck disable=SC2154
 	install -Dm755 guid -t "$pkgdir/usr/bin"
-	ln -s /usr/bin/guid "$pkgdir/usr/bin/guid-askpass"
 }
