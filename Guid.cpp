@@ -5226,7 +5226,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	QFont appFont("Sans-serif", 9);
+	QFont appFont("Sans-serif", 12);
 	QApplication::setFont(appFont);
 	foreach (QWidget* widget, QApplication::allWidgets()) {
 		widget->setFont(appFont);
