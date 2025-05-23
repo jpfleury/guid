@@ -67,23 +67,23 @@ jobs:
           tar -xf qt-src.tar.xz
           cd "qt-everywhere-src-$QT_V"
           "$QT_STATIC_PATH/bin/qmake" qtx11extras
-          make -j$(nproc)
+          make -j "$(nproc)"
           sudo make install
 
       - name: Build guid
         run: |
           "$QT_STATIC_PATH/bin/qmake" guid.pro
-          make -j$(nproc)
+          make -j "$(nproc)"
 
       - name: Test executable
         run: |
-          guid_bin="./guid"
+          guid_bin=./guid
           
-          [[ -x "$guid_bin" ]] || { echo "Binary not found"; exit 1; }
+          [[ -x $guid_bin ]] || { echo "Binary not found"; exit 1; }
           
-          guid_help=$("$guid_bin" --help | sed '/^$/d')
+          guid_version=$("$guid_bin" --version)
           
-          [[ "$guid_help" =~ ^"Usage: guid" ]] || { echo "Failed to run guid properly: $guid_help"; exit 1; }
+          [[ $guid_version == "guid version "* ]] || { echo "Failed to run guid properly: $guid_version"; exit 1; }
 
       - name: Generate documentation
         run: |
@@ -135,15 +135,17 @@ jobs:
       - name: Build guid
         run: |
           "$QT_STATIC_PATH/bin/qmake" guid.pro
-          make -j$(sysctl -n hw.logicalcpu)
+          make -j "$(sysctl -n hw.logicalcpu)"
 
       - name: Test executable
         run: |
-          [[ -x guid.app/Contents/MacOS/guid ]] || { echo "Binary not found"; exit 1; }
+          guid_bin=guid.app/Contents/MacOS/guid
           
-          guid_help=$(guid.app/Contents/MacOS/guid --help | sed '/^$/d')
+          [[ -x $guid_bin ]] || { echo "Binary not found"; exit 1; }
           
-          [[ "$guid_help" =~ ^"Usage: guid" ]] || { echo "Failed to run guid properly: $guid_help"; exit 1; }
+          guid_version=$("$guid_bin" --version)
+          
+          [[ $guid_version == "guid version "* ]] || { echo "Failed to run guid properly: $guid_version"; exit 1; }
 
       - name: Generate documentation
         run: |
@@ -198,7 +200,7 @@ jobs:
         run: |
           set PATH=C:\msys64\mingw64\bin;%PATH%
           %QT_STATIC_PATH%\bin\qmake.exe guid.pro
-          mingw32-make.exe -j%NUMBER_OF_PROCESSORS%
+          mingw32-make.exe -j %NUMBER_OF_PROCESSORS%
 
       - name: Test executable
         shell: pwsh
@@ -207,11 +209,10 @@ jobs:
             throw "Binary not found"
           }
 
-          $guid_help = (& .\release\guid.exe --help) -join "`n"
-          $guid_help = $guid_help.Trim()
+          $guid_version = (& .\release\guid.exe --version)
 
-          if ($guid_help -notmatch '^Usage: guid') {
-            Write-Error "Failed to run guid properly:`n$guid_help"
+          if ($guid_version -notmatch '^guid version ') {
+            Write-Error "Failed to run guid properly:`n$guid_version"
             exit 1
           }
 
@@ -253,7 +254,7 @@ jobs:
           tag=${{ needs.set-vars.outputs.tag_name }}
           
           # Note: release is created as draft for manual validation
-          gh release create "$tag" -t "GUID $tag" -n "Static builds for GUID $tag" --draft
+          gh release create "$tag" -t "guid $tag" -n "Static builds for guid $tag" --draft
 
       - name: Upload assets
         run: |
