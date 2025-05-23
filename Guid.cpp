@@ -261,6 +261,8 @@
 			ws.monitorVarName8 = getWidgetSettingQString(setting);    \
 		else if (setting.startsWith("monitorVarName9="))              \
 			ws.monitorVarName9 = getWidgetSettingQString(setting);    \
+		else if (setting.startsWith("selected="))                     \
+			ws.selected = getWidgetSettingBool(setting);              \
 		else if (setting.startsWith("sep="))                          \
 			ws.sep = getWidgetSettingQString(setting);                \
 		else if (setting.startsWith("stop="))                         \
@@ -2992,7 +2994,11 @@ char Guid::showForms(const QStringList& args) {
 				if (ws.verboseTabBar)
 					lastTabBar->setProperty("guid_tab_bar_verbose", ws.verboseTabBar);
 
-				lastTabBar->addTab(lastTab, lastTabName);
+				int indexTab = lastTabBar->addTab(lastTab, lastTabName);
+				if (ws.selected) {
+					lastTabBar->setCurrentIndex(indexTab);
+				}
+
 				connect(lastTabBar, SIGNAL(currentChanged(int)), this, SLOT(afterTabBarClick(int)), Qt::UniqueConnection);
 			}
 

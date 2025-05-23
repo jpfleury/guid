@@ -366,18 +366,19 @@ guid --forms \
 Help("", "") <<
 
 // --tab
-Help(R"HEREDOC(--tab="[addLabel=Tab bar label@][disableButtons=true@][stop=true@]
-   [verboseTabBar=true@]Tab name")HEREDOC",
+Help(R"HEREDOC(--tab="[addLabel=Tab bar label@][disableButtons=true@][selected=true@]
+   [stop=true@][verboseTabBar=true@]Tab name")HEREDOC",
      QObject::tr(R"HEREDOC(Create a tab bar.
 After adding "--tab=NAME", next fields will be added to the tab NAME unless another
-one is specified with "--tab=ANOTHER_NAME". Stop adding fields in the last tab with
-the variable "stop=true". Example:
+one is specified with "--tab=ANOTHER_NAME". Mark the tab as selected by default when
+the dialog is shown with the variable "selected=true". Stop adding fields in the last
+tab with the variable "stop=true". Example:
 guid --forms \
  --text="Form with a tab bar" \
  --tab="Tab 1" \
      --add-entry="Text field in the tab 1" \
      --add-entry="Another text field in the tab 1" \
- --tab="Tab 2" \
+ --tab="selected=true@Tab 2" \
      --add-spin-box="Spin box in the tab 2" --min-value=10 --value=50 \
  --tab="stop=true" \
  --add-scale="Field outside the tab bar" --step=5
@@ -395,8 +396,6 @@ guid --forms \
 To include information about the tab bar in values printed to the console, add the
 variable "verboseTabBar=true". Separators will be added in the output between tab
 fields and the selected tab will be marked with "*".)HEREDOC")) <<
-Help("--tab-selected",
-     QObject::tr("Mark the tab as selected by default when the dialog is shown")) <<
 Help("", "") <<
 
 // --col1 || --col2

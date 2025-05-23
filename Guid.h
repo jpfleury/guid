@@ -87,6 +87,7 @@ struct WidgetSettings {
 	QString monitorVarName7 = "";
 	QString monitorVarName8 = "";
 	QString monitorVarName9 = "";
+	bool selected = false;
 	QString sep = "";
 	bool stop = false;
 	bool valuesToFooter = false;
