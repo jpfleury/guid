@@ -2936,6 +2936,10 @@ char Guid::showForms(const QStringList& args) {
 			next_arg = NEXT_ARG;
 			SET_WIDGET_SETTINGS(next_arg)
 
+			if (!lastWidgetVar.isEmpty() && lastWidget) {
+				lastWidget->setProperty("guid_var", lastWidgetVar);
+			}
+
 			if (ws.stop) {
 				setGroup(lastGroup, fl, lastGroupLabel, lastGroupName);
 			} else {
@@ -2953,11 +2957,14 @@ char Guid::showForms(const QStringList& args) {
 				lastGroup->setLayout(lastGroupLayout);
 			}
 
-			lastWidgetVar = "";
+			lastWidgetVar.clear();
 		}
 
 		// --tab
 		else if (args.at(i) == "--tab") {
+			if (!lastWidgetVar.isEmpty() && lastWidget) {
+				lastWidget->setProperty("guid_var", lastWidgetVar);
+			}
 			next_arg = NEXT_ARG;
 			SET_WIDGET_SETTINGS(next_arg)
 
@@ -2989,20 +2996,26 @@ char Guid::showForms(const QStringList& args) {
 				connect(lastTabBar, SIGNAL(currentChanged(int)), this, SLOT(afterTabBarClick(int)), Qt::UniqueConnection);
 			}
 
-			lastWidgetVar = "";
+			lastWidgetVar.clear();
 		}
 
 		// --col1
 		else if (args.at(i) == "--col1") {
+			if (!lastWidgetVar.isEmpty() && lastWidget) {
+				lastWidget->setProperty("guid_var", lastWidgetVar);
+			}
 			lastColumn = "col1";
 			columnsLayout = new QHBoxLayout();
-			lastWidgetVar = "";
+			lastWidgetVar.clear();
 		}
 
 		// --col2
 		else if (args.at(i) == "--col2") {
+			if (!lastWidgetVar.isEmpty() && lastWidget) {
+				lastWidget->setProperty("guid_var", lastWidgetVar);
+			}
 			lastColumn = "col2";
-			lastWidgetVar = "";
+			lastWidgetVar.clear();
 		}
 
 		/********************************************************************************
@@ -3065,7 +3078,6 @@ char Guid::showForms(const QStringList& args) {
 			SET_WIDGET_SETTINGS(next_arg)
 
 			lastFileSel = new QFileDialog();
-			lastWidget = lastFileSel;
 			lastFileSelLabel = new QLabel(next_arg);
 
 			QString lastFileSelButtonText = tr("Select");
@@ -3074,6 +3086,9 @@ char Guid::showForms(const QStringList& args) {
 			lastFileSelButton = new QPushButton(lastFileSelButtonText, lastFileSelContainer);
 
 			lastFileSelEntry = new QLineEdit(lastFileSelContainer);
+
+			lastWidget = lastFileSelEntry;
+			lastWidgetId = "file-sel";
 
 			lastFileSelLayout = new QHBoxLayout();
 			lastFileSelLayout->setContentsMargins(0, 0, 0, 0);
@@ -3084,11 +3099,17 @@ char Guid::showForms(const QStringList& args) {
 			lastFileSelContainer->setProperty("guid_file_sel_container", true);
 			lastFileSelContainer->setLayout(lastFileSelLayout);
 
-			lastFileSel->setViewMode(guidQSsettings.value("FileDetails", false).toBool() ? QFileDialog::Detail : QFileDialog::List);
+			lastFileSel->setViewMode(
+			    guidQSsettings.value("FileDetails", false).toBool()
+			        ? QFileDialog::Detail
+			        : QFileDialog::List);
 			lastFileSel->setFileMode(QFileDialog::ExistingFile);
 			lastFileSel->setOption(QFileDialog::DontUseNativeDialog);
-			lastFileSel->setFilter(QDir::AllDirs | QDir::AllEntries | QDir::Hidden | QDir::System);
-			lastFileSel->setProperty("guid_file_sel_separator", dlg->property("guid_separator").toString());
+			lastFileSel->setFilter(
+			    QDir::AllDirs | QDir::AllEntries | QDir::Hidden | QDir::System);
+			lastFileSel->setProperty(
+			    "guid_file_sel_separator",
+			    dlg->property("guid_separator").toString());
 			lastFileSel->setProperty("guid_hide", false);
 
 			QVariantList guidBookmarksList = guidQSsettings.value("Bookmarks").toList();
@@ -3098,14 +3119,16 @@ char Guid::showForms(const QStringList& args) {
 			if (!lastFileSelBookmarks.isEmpty())
 				lastFileSel->setSidebarUrls(lastFileSelBookmarks);
 
-			QObject::connect(lastFileSelButton, &QPushButton::clicked, [=]() {
-				if (lastFileSel->exec()) {
-					QStringList lastFileSelFiles = lastFileSel->selectedFiles();
-					QString lastFileSelEntryText = lastFileSelFiles.join(
-					    lastFileSel->property("guid_file_sel_separator").toString());
-					lastFileSelEntry->setText(lastFileSelEntryText);
-				}
-			});
+			QObject::connect(
+			    lastFileSelButton, &QPushButton::clicked,
+			    [=]() {
+				    if (lastFileSel->exec()) {
+					    QStringList files = lastFileSel->selectedFiles();
+					    QString text = files.join(
+					        lastFileSel->property("guid_file_sel_separator").toString());
+					    lastFileSelEntry->setText(text);
+				    }
+			    });
 
 			ADD_WIDGET_TO_FORM(lastFileSelLabel, lastFileSelContainer)
 		}
@@ -3814,13 +3837,13 @@ char Guid::showForms(const QStringList& args) {
 		}
 
 		/******************************
-         * calendar || checkbox || entry || password || spin-box || double-spin-box || scale || combo || list || text-info
+         * calendar || checkbox || entry || password || spin-box || double-spin-box || scale || combo || list || text-info || file-sel
          ******************************/
 
 		// --var
 		else if (args.at(i) == "--var") {
 			next_arg = NEXT_ARG;
-			if (lastWidgetId == "calendar" || lastWidgetId == "checkbox" || lastWidgetId == "entry" || lastWidgetId == "password" || lastWidgetId == "spin-box" || lastWidgetId == "double-spin-box" || lastWidgetId == "scale" || lastWidgetId == "combo" || lastWidgetId == "list" || lastWidgetId == "text-info") {
+			if (lastWidgetId == "calendar" || lastWidgetId == "checkbox" || lastWidgetId == "entry" || lastWidgetId == "password" || lastWidgetId == "spin-box" || lastWidgetId == "double-spin-box" || lastWidgetId == "scale" || lastWidgetId == "combo" || lastWidgetId == "list" || lastWidgetId == "text-info" || lastWidgetId == "file-sel") {
 				lastWidgetVar = next_arg;
 			} else {
 				WARN_UNKNOWN_ARG("--add-entry");
