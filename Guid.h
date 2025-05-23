@@ -89,6 +89,7 @@ struct WidgetSettings {
 	QString monitorVarName9 = "";
 	bool selected = false;
 	QString sep = "";
+	int size = 0;
 	bool stop = false;
 	bool valuesToFooter = false;
 	bool verboseTabBar = false;
@@ -123,7 +124,7 @@ public:
 
 private:
 	// Misc.
-	void createQRCode(QLabel* label, QString text);
+	void createQRCode(QLabel* label, QString text, int size);
 	bool error(const QString message);
 	QString labelText(const QString& s) const; // m_zenity requires \n and \t interpretation in html.
 	void listenToStdIn();

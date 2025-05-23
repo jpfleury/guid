@@ -265,6 +265,8 @@
 			ws.selected = getWidgetSettingBool(setting);              \
 		else if (setting.startsWith("sep="))                          \
 			ws.sep = getWidgetSettingQString(setting);                \
+		else if (setting.startsWith("size="))                         \
+			ws.size = getWidgetSettingInt(setting);                   \
 		else if (setting.startsWith("stop="))                         \
 			ws.stop = getWidgetSettingBool(setting);                  \
 		else if (setting.startsWith("valuesToFooter="))               \
@@ -2166,7 +2168,7 @@ void Guid::updateTextInfo(QString filePath) {
  * private (1 of 2): misc.
  ******************************************************************************/
 
-void Guid::createQRCode(QLabel* label, QString text) {
+void Guid::createQRCode(QLabel* label, QString text, int size) {
 	qrcodegen::QrCode qrCode = qrcodegen::QrCode::encodeText(text.toUtf8().data(), qrcodegen::QrCode::Ecc::HIGH);
 	qint32 qrCodeSize = qrCode.getSize();
 	QImage qrCodeImage(qrCodeSize, qrCodeSize, QImage::Format_RGB32);
@@ -2177,7 +2179,8 @@ void Guid::createQRCode(QLabel* label, QString text) {
 			qrCodeImage.setPixel(x, y, qrCode.getModule(x, y) ? colorBlack : colorWhite);
 		}
 	}
-	label->setPixmap(QPixmap::fromImage(qrCodeImage.scaled(256, 256, Qt::KeepAspectRatio, Qt::FastTransformation), Qt::MonoOnly));
+	int imageSize = (size > 0) ? size : 256;
+	label->setPixmap(QPixmap::fromImage(qrCodeImage.scaled(imageSize, imageSize, Qt::KeepAspectRatio, Qt::FastTransformation), Qt::MonoOnly));
 }
 
 bool Guid::error(const QString message) {
@@ -3700,7 +3703,7 @@ char Guid::showForms(const QStringList& args) {
 			if (ws.addLabel.isEmpty())
 				ws.hideLabel = true;
 
-			createQRCode(lastQRCodeContainer, next_arg);
+			createQRCode(lastQRCodeContainer, next_arg, ws.size);
 
 			ADD_WIDGET_TO_FORM(lastQRCodeLabel, lastQRCodeContainer)
 		}
@@ -3895,7 +3898,7 @@ char Guid::showForms(const QStringList& args) {
 		}
 
 		/******************************
-         * entry || text || hrule || password || spin-box || double-spin-box || combo || text-browser || text-info
+         * entry || text || hrule || password || spin-box || double-spin-box || combo || list || text-browser || text-info
          ******************************/
 
 		// --field-width

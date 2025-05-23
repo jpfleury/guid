@@ -679,7 +679,7 @@ Help("--var=NAME",
 Help("", "") <<
 
 // --add-qr-code
-Help("--add-qr-code=\"[addLabel=QR code label@]QR Code text\"",
+Help("--add-qr-code=\"[addLabel=QR code label@][size=Size@]QR Code text\"",
      QObject::tr(R"HEREDOC(Add a QR code in forms dialog.
 Note that this widget is not a user input field, so it doesn't appear in the console
 (no even as empty value) when user input is printed.)HEREDOC")) <<
