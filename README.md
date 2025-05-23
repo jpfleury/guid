@@ -325,7 +325,7 @@ The file [help-all.md](doc/help-all.md) contains the complete and verbose output
 
 ## License
 
-Copyright (C) 2021-2025  Jean-Philippe Fleury <https://github.com/jpfleury>
+Copyright (C) 2021-2025  Jean-Philippe Fleury <https://github.com/jpfleury>  
 Copyright (C) 2014  Thomas Lübking <thomas.luebking@gmail.com>
 
 This program is free software; you can redistribute it and/or modify
