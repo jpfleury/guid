@@ -5216,6 +5216,12 @@ int main(int argc, char** argv) {
 			Guid::printHelp(arg.mid(7));
 			return 0;
 		}
+		
+		if (arg == "--short-version") {
+			QTextStream(stdout)
+			    << app.applicationVersion() << "\n";
+			return 0;
+		}
 
 		if (arg == "--version") {
 			QTextStream(stdout)
@@ -5223,7 +5229,7 @@ int main(int argc, char** argv) {
 			    << " version " << app.applicationVersion() << "\n";
 			return 0;
 		}
-
+		
 		if (arg == "--about") {
 			QTextStream(stdout)
 			    << app.applicationName() << " version "

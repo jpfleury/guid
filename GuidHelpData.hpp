@@ -66,8 +66,10 @@ Help("--help-warning",
 helpDict["misc"] = CategoryHelp(QObject::tr("Miscellaneous options"), HelpList() <<
 Help("--about",
      QObject::tr("About guid")) <<
+Help("--short-version",
+     QObject::tr("Print plain version number only")) <<
 Help("--version",
-     QObject::tr("Print guid version")));
+     QObject::tr("Print version with program name")));
 
 /******************************
  * general
