@@ -2522,8 +2522,9 @@ char Guid::showColorSelection(const QStringList& args) {
 			} else {
 				qOutErr << m_prefixErr + "You have to provide a gimp palette (*.gpl)" << Qt::endl;
 			}
+		} else {
+			WARN_UNKNOWN_ARG("--color-selection")
 		}
-		{ WARN_UNKNOWN_ARG("--color-selection") }
 	}
 	SHOW_DIALOG
 	return 0;
