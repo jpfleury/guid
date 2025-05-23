@@ -5,6 +5,7 @@
 /build/
 compile_commands.json
 guid
+guid_demo_*
 Makefile
 moc_*
 qrc_*
