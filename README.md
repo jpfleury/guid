@@ -91,9 +91,8 @@ We'll progressively build dialogs, from simple prompts to more advanced interfac
 
 ### Collect basic user info
 
-Refer to [Qt's QDate::toString() docs](https://doc.qt.io/qt-6/qdate.html#toString) for the date format.
-
 ```bash
+# Refer to https://doc.qt.io/qt-6/qdate.html#toString for the date format.
 ./guid --forms \
 	--title="Basic profile" \
 	--add-text="Welcome to your personal setup!" \
