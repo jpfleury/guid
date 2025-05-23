@@ -5194,58 +5194,48 @@ char Guid::showText(const QStringList& args) {
  ******************************************************************************/
 
 int main(int argc, char** argv) {
-	QApplication app(argc, argv);
-	app.setApplicationName("guid");
-	app.setApplicationVersion(APP_VERSION);
-
-	QStringList args = QCoreApplication::arguments();
-	args.removeFirst();
-
-	if (args.isEmpty()) {
+	if (argc < 2) {
 		Guid::printHelp();
 		return 1;
 	}
 
-	for (const QString& arg : args) {
-		if (arg == "--help" || arg == "-h") {
-			Guid::printHelp();
+	for (int i = 1; i < argc; ++i) {
+		const QString arg(argv[i]);
+
+		if (arg == "--about") {
+			QTextStream(stdout)
+			    << "guid version " << APP_VERSION << "\n"
+			    << "Create advanced cross-platform GUI dialogs from the command line.\n"
+			    << "Visit https://github.com/jpfleury/guid for more information.\n";
 			return 0;
 		}
 
-		if (arg.startsWith("--help-")) {
-			Guid::printHelp(arg.mid(7));
+		if (arg == "-h" || arg.startsWith("--help")) {
+			Guid::printHelp(arg.mid(7)); // "--help-"
 			return 0;
 		}
 
 		if (arg == "--short-version") {
-			QTextStream(stdout)
-			    << app.applicationVersion() << "\n";
+			QTextStream(stdout) << APP_VERSION << "\n";
 			return 0;
 		}
 
 		if (arg == "--version") {
-			QTextStream(stdout)
-			    << app.applicationName()
-			    << " version " << app.applicationVersion() << "\n";
-			return 0;
-		}
-
-		if (arg == "--about") {
-			QTextStream(stdout)
-			    << app.applicationName() << " version "
-			    << app.applicationVersion() << "\n"
-			    << "Create advanced cross-platform GUI dialogs from the command line\n"
-			    << "Visit https://github.com/jpfleury/guid for more information.\n";
+			QTextStream(stdout) << "guid version " << APP_VERSION << "\n";
 			return 0;
 		}
 	}
 
-	QFont font("Sans-serif", 9);
-	app.setFont(font);
+	QFont appFont("Sans-serif", 9);
+	QApplication::setFont(appFont);
+	foreach (QWidget* widget, QApplication::allWidgets()) {
+		widget->setFont(appFont);
+		widget->update();
+	}
 
-	Guid dlg(argc, argv);
+	Guid d(argc, argv);
 
-	return dlg.exec();
+	return d.exec();
 }
 
 // End of "main"
