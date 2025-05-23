@@ -2,7 +2,7 @@
  * Create advanced cross-platform GUI dialogs from the command line.
  * Run `guid --help` for details.
  *
- * Copyright (C) 2021  Jean-Philippe Fleury <https://github.com/jpfleury>
+ * Copyright (C) 2021-2025  Jean-Philippe Fleury <https://github.com/jpfleury>
  * Copyright (C) 2014  Thomas Lübking <thomas.luebking@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
