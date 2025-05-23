@@ -2477,6 +2477,10 @@ char Guid::showCalendar(const QStringList& args) {
 char Guid::showColorSelection(const QStringList& args) {
 	QOUT_ERR
 	QColorDialog* dlg = new QColorDialog;
+
+	if (!m_caption.isNull())
+		dlg->setWindowTitle(m_caption);
+
 	QVariantList l = QSettings("guid").value("CustomPalette").toList();
 	for (int i = 0; i < l.count() && i < dlg->customCount(); ++i)
 		dlg->setCustomColor(i, QColor(l.at(i).toUInt()));
