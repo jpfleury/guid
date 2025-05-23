@@ -1,4 +1,4 @@
-name: Build and release guid for Linux, macOS and Windows
+name: Builds for Linux, macOS, and Windows
 
 on:
   push:
