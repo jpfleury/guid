@@ -1,6 +1,9 @@
+.cache
 *.o
 *.stash
 /archives/
+/build/
+compile_commands.json
 guid
 Makefile
 moc_*
