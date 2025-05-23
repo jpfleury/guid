@@ -19,9 +19,6 @@
 
 #pragma once
 
-class QDialog;
-class QTreeWidgetItem;
-
 #include <QApplication>
 #include <QGroupBox>
 #include <QLabel>
@@ -29,6 +26,9 @@ class QTreeWidgetItem;
 #include <QSystemTrayIcon>
 #include <QTreeWidget>
 #include <QWidget>
+
+class QDialog;
+class QTreeWidgetItem;
 
 struct GList {
 	QString addValue;

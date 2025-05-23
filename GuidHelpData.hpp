@@ -2,6 +2,7 @@
 
 #include <QList>
 #include <QMap>
+#include <QObject>
 #include <QString>
 
 typedef QPair<QString, QString> Help;

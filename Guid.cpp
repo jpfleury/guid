@@ -19,6 +19,7 @@
 
 #include "Guid.h"
 #include "GuidHelpData.hpp"
+#include "qrcodegen/qrcodegen.hpp"
 
 #include <QAction>
 #include <QBoxLayout>
@@ -82,8 +83,6 @@
 #include <signal.h>
 #include <unistd.h>
 #endif
-
-#include "qrcodegen/qrcodegen.hpp"
 
 /******************************************************************************
  * define
